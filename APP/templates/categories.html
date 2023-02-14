@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if category_posts %}
+<h4> Posts sobre <strong>{{ cats }}</strong>.</h4><br>
+
+<ul>
+    {% for post in category_posts %}
+    <li><a href="{% url 'article-detail' post.pk %}">
+        {{post.title}}</a> 
+        - {{post.author.first_name}}
+    {{post.author.last_name}} 
+    - {{ post.post_date }}
+    <small>
+    {% if user.is_authenticated %}
+        {% if user.id == post.author.id %}
+            - <a href="{% url 'article_update' post.pk %}">(Edit)</a>
+            <a href="{% url 'article_delete' post.pk %}"><span style="color:red">[Delete]</span></a>
+        {% endif %}
+    {% endif %}
+    </small><br>
+    {{post.body | slice:":50" | safe}}
+</li>
+    {% endfor %}
+</ul>
+{% else %}
+<h2> Sorry! This page does not exist! </h2>
+{% endif %}
+
+<br><br>
+<a href="{% url 'home' %}" class="btn btn-secondary">Home</a>
+
+
+{% endblock %}
