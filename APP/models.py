@@ -22,6 +22,7 @@ class Post(models.Model):
     body = models.TextField()
     category = models.CharField(max_length=255, default="coding")
     post_date = models.DateField(auto_now_add=True)
+    referencia = models.TextField()
 
     def __str__(self):
         return self.title + ' | ' + str(self.author)
